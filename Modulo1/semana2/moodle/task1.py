@@ -20,5 +20,17 @@ while True:
         except ValueError:
             print("La opcion debe ser un numero")
     if ingresa == 1:
-        producto=input("ingrese Producto: ").strip()
-                    
+        while True:
+            producto=input("ingrese Producto: ")
+            try:    
+                cantidad=int(input("Ingrese las cantidades: "))
+            except ValueError:
+                print("La opcion debe ser un numero")    
+                break
+            try:    
+                precio=int(input("Ingrese el precio: "))
+                print(f"Producto: {producto} | Cantidades: {cantidad} | Precio: {precio}")
+                break
+            except ValueError:
+                print("La opcion debe ser un numero") 
+                break            
