@@ -191,11 +191,11 @@ Medio (1000–3000 km): 1000 millas
 Largo (> 3000 km): 2000 millas
 Debe repetirse hasta que el usuario escriba “fin” y mostrar el total acumulado.'''  
 
-
-def calcular_millas():
+#cantidad_viajes= int(input("Nuemro de viajes: "))
+def calcular_millas(cantidad):
     
     total_millas=0
-    while True:
+    while cantidad > 0:
         viajes=(input('Ingresa la distancia recorrida: '))
         if viajes == 'fin':
             print('fin gracias')
@@ -214,11 +214,98 @@ def calcular_millas():
                 millas =500
             else:
                 print("Debe existir una distancia positiva")
+            cantidad-=1    
             total_millas += millas    
             print(f"Recorriste {n_viaje} km, ganaste {millas} millas. Total acumulado: {total_millas} millas.")
     print(f'fin programa millas acumuladas: {total_millas}')            
         
-                        
+#calcular_millas(cantidad_viajes)
 
+'''12. Hospital “Salud Total” – Evaluador de signos vitales
+Como médico, quiero una función evaluar_paciente() que reciba frecuencia cardiaca y temperatura corporal.
+Si ambos valores están fuera del rango normal (FC > 100 o Temp > 38), mostrar “Paciente en observación”.
+Repetir el proceso con varios pacientes en un bucle while.'''
 
-calcular_millas()
+def evaluar_paciente():
+    pacientes=int(input("Numero de pacientes: "))
+    paciente=0
+    while paciente <= pacientes:
+        frecuencia=int(input("Ingrese frecuencia cardiaca: "))
+        temperatura= int(input("Ingrese termperatura corporal: "))
+        if frecuencia > 80 and frecuencia < 100 and temperatura > 30 and temperatura < 38:
+            print(f"paciente: {paciente} Estado vital normal")
+        elif frecuencia > 0 or temperatura > 0:   
+            print(f"Paciente {paciente} en observacion!")
+        else:
+            print("Esta muerto")
+        paciente += 1     
+            
+
+#evaluar_paciente()  
+
+'''13. Tienda Online “ShopMaster” – Carrito de compras con validaciones
+Como comprador, quiero una función carrito() que permita ingresar precios de productos y valide:
+
+Si el precio es negativo, mostrar error y pedir otro valor.
+Si el precio es mayor a 100.000, aplicar un 20% de descuento.
+Usar while y if dentro de la función hasta ingresar 0 para finalizar.''' 
+
+def carrito():
+    productos= 0
+    while True:
+        precio=int(input("Ingresar valor producto: "))
+        if precio >= 100000:
+            descuento=precio*0.9
+            productos+=descuento
+            print(f"Tu precio con descuento es: {descuento} tu acumulado es: {productos}")
+        elif precio > 0:
+            productos+=precio
+            print(f"Tu precio es: {precio} tu acumulado es: {productos}")
+        elif precio == 0:
+            print("Gracias por ingresar")
+            break
+        else:
+            print("Un precio no puede ser negativo.")
+
+#carrito()    
+
+'''14. Academia “DevLoop” – Calculadora de factoriales
+Como estudiante de programación, quiero una función calcular_factorial(numero) que use un bucle for para calcular el factorial del número.
+Si el número ingresado es negativo, mostrar “Número inválido”.
+De lo contrario, mostrar el resultado.''' 
+
+def calcular_factorial(numero):
+    
+    if numero < 0:
+        print("Error")
+    factorial=1
+    for num in range(1,numero+1):
+        factorial*= num
+            
+    print(f"Factorial del numero: {numero} es {factorial}")
+
+#calcular_factorial(5)
+
+'''15. Empresa “TechManager” – Simulador de rendimiento laboral
+Como jefe de equipo, quiero una función evaluar_empleado(nombre, horas) que:
+
+Use un bucle for para simular las horas trabajadas (de 1 hasta horas).
+Si la hora es mayor de 8, contar como hora extra.
+Al final, calcular el total de horas normales y extras.
+Mostrar un resumen del empleado. '''
+nombre= input("Ingresar nombre empleado: ")
+horas= int(input("Horas trabajadas al dia: "))
+def evaluar_empleado(nombre, horas):
+    if horas > 0 and horas < 25:
+        for hora in range(horas):
+            if hora > 8:
+                hora-=8
+                extra=hora
+                print(f"Haz trabajado {extra} horas extras.")
+            else:
+                print(f"Haz trabajado {hora} horas ")
+             
+    else:
+        print("Horario no valido.")
+evaluar_empleado(nombre, horas)        
+    

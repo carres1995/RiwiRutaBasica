@@ -53,9 +53,9 @@ Como profesor, quiero usar un while que sume tareas hasta 10. Si el contador lle
 tareas=0
 while tareas != 10:
     tareas += 1
-    print(f"Te faltan {tareas}")
+    print(f"Te faltan {10-tareas}")
 else:
-    print("Todas las tareas recibidas!")  """
+    print("Todas las tareas recibidas!") """ 
 
 """6. Fábrica “LoopTech” – Control de producción
 Como supervisor, quiero que un for muestre los productos fabricados del 1 al número que indique el usuario.
@@ -83,8 +83,8 @@ for i in range(3):
         print("Limpia tu estación")  """  
 
 
-lista=[1,2,3,4,5,6,7,8,9]
+"""lista=[1,2,3,4,5,6,7,8,9]
 
 lista.pop()
 
-print(lista)
+print(lista)"""
