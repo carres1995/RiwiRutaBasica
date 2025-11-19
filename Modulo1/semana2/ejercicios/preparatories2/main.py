@@ -14,17 +14,17 @@ def main():
             description=input('task description: ') 
             crud.create_task(name,description) 
         elif option == 2:
-            print('1. si')
+            print('1. yes')
             print('2. no')
             mark =int(input("You want to mark task as finished? "))
             if mark == 1:
-                id=int(input('Cual es el id: '))
+                id=int(input('what is ID: '))
                 crud.state_task(id)
             else:
                 print("Ok")
                 continue
         elif option == 3:
-            id=int(input('Cual es el id: '))
+            id=int(input('what is ID: '))
             crud.delete_task(id)
         elif option == 4:
             crud.show_tasks()

@@ -4,8 +4,8 @@ import os
 
 os.makedirs("datos", exist_ok=True)
 
-CSV='datos/datos.csv'
-JSON='datos/datos.json'
+CSV='Modulo1/semana2/ejercicios/preparatories2/datos/datos.csv'
+JSON='Modulo1/semana2/ejercicios/preparatories2/datos/datos.json'
 
 def load_json():
     try:
