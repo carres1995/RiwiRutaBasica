@@ -1,7 +1,7 @@
 from archivo_csv import crear_archivo, leer_archivo
 
 
-RUTA_USUARIO="Modulo1/week3/Ejercicios/data/usuarios.csv"
+RUTA_USUARIO="/data/usuarios.csv"
 CABECERAS=["usuario", "contraseña", "rol"]
 
 crear_archivo(RUTA_USUARIO,CABECERAS,datos=[{"usuario":"ADMIN", "contraseña":"1234", "rol":"ADMIN"}])

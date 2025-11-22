@@ -19,8 +19,8 @@ mis_equipos = [
     }
 ]
 
-listar_equipos(mis_equipos)
-from equipos import registrar_equipo, listar_equipos, guardar_equipos, cargar_equipos
+#listar_equipos(mis_equipos)
+from equipos import registrar_equipo, listar_equipos, guardar_equipos, cargar_equipos, buscar_por_id, mostrar_equipo
 
 eq = cargar_equipos()
 
@@ -29,4 +29,5 @@ registrar_equipo("Proyector Epson", "Audiovisual", "Full HD", eq)
 guardar_equipos(eq)
 
 # listado
-listar_equipos(eq)
+#listar_equipos(eq)
+mostrar_equipo(buscar_por_id(4,eq))

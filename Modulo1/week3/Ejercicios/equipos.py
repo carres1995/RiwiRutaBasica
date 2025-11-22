@@ -1,13 +1,13 @@
 from datetime import datetime
 from pathlib import Path
 from archivo_csv import leer_archivo, guardar_csv
-from utils import id_auto, tabla_general
+from utils import id, tabla_general
 
-RUTA_EQUIPOS = Path("Modulo1/week3/Ejercicios/data/equipos.csv")
+RUTA_EQUIPOS = Path("data/equipos.csv")
 CABECERAS = ["equipo_id", "nombre_equipo", "categoria",
              "estado_actual", "fecha_registro", "descripcion"]
 
-# ----------  persistencia  ----------
+
 def cargar_equipos():
     """Lee el CSV y devuelve lista de diccionarios."""
     return leer_archivo(RUTA_EQUIPOS) or []
@@ -18,14 +18,14 @@ def guardar_equipos(eq):
     guardar_csv(RUTA_EQUIPOS, eq, CABECERAS)
 
 
-# ----------  lógica  ----------
+
 def registrar_equipo(nombre, categoria, descripcion="", eq=None):
     """Crea el equipo en memoria y lo devuelve."""
     if eq is None:
         eq = cargar_equipos()
 
     nuevo = {
-        "equipo_id": str(id_auto(eq, "equipo_id")),
+        "equipo_id": str(id(eq, "equipo_id")),
         "nombre_equipo": nombre,
         "categoria": categoria,
         "estado_actual": "DISPONIBLE",
@@ -46,20 +46,57 @@ def listar_equipos(eq=None):
         print("No hay equipos para mostrar.")
         return
 
-    encabezados = ("ID", "Nombre", "Categoría", "Estado", "Fecha", "Descripción")
-    anchos = (5, 12, 10, 10, 10, 30)
+    encabezados = ("id", "nombre", "categoría", "estado", "fecha", "descripción")
+    anchos = (5, 15, 15, 15, 15, 30)
 
-    datos = [
-        {
-            "ID": str(e.get("equipo_id", "")),
-            "Nombre": e.get("nombre_equipo", ""),
-            "Categoría": e.get("categoria", ""),
-            "Estado": e.get("estado_actual", ""),
-            "Fecha": e.get("fecha_registro", ""),
-            "Descripción": e.get("descripcion", "")
-        }
-        for e in eq
-    ]
+    datos = []
+    for e in eq:
+        # ---------  campos obligatorios  ---------
+        try:
+            fila = {
+                "id": str(e["equipo_id"]),
+                "nombre": e["nombre_equipo"],
+                "categoría": e["categoria"],
+                "estado": e["estado_actual"],
+                "fecha": e["fecha_registro"],
+                "descripción": e.get("descripcion", "")
+            }
+        except KeyError as err:
+            # si falta algo crítico, avisamos y saltamos ese registro
+            print(f"⚠️  Equipo incompleto (falta {err}) – se omite de la tabla.")
+            continue
+        datos.append(fila)
 
     print("--" * 20, "Lista de Equipos", "--" * 20)
     tabla_general(datos, encabezados, anchos)
+    
+def buscar_por_id(id, eq=None):
+    """Busca un equipo por ID y devuelve el dict o None."""
+    eq = eq or cargar_equipos()
+
+    for e in eq:
+        if str(e["equipo_id"]) == str(id):
+            return e
+    return 
+
+def mostrar_equipo(e):
+    """Muestra un solo equipo en formato tabla sencillo."""
+    print("--" * 20, "Equipo encontrado", "--" * 20)
+    print(f"ID         : {e['equipo_id']}")
+    print(f"Nombre     : {e['nombre_equipo']}")
+    print(f"Categoría  : {e['categoria']}")
+    print(f"Estado     : {e['estado_actual']}")
+    print(f"Fecha reg. : {e['fecha_registro']}")
+    print(f"Descripción: {e['descripcion']}")
+    print("-" * 60)
+
+
+# Uso rápido (ejemplo)
+if __name__ == "__main__":
+    eq = cargar_equipos()
+    cod = input("ID a buscar: ").strip()
+    equipo = buscar_por_id(cod, eq)
+    if equipo:
+        mostrar_equipo(equipo)
+    else:
+        print("No se encontró un equipo con ese ID.")
