@@ -1,0 +1,3 @@
+prestamo_id,equipo_id,nombre_equipo,usuario_prestatario,tipo_usuario,fecha_solicitud,fecha_prestamo,dias_autorizados,dias_solicitados,autorizacion,estado
+1,1,Proyector Epson,Carlos,estudiante,2025-11-23,2025-11-10 00:00:00,3,5,no cumple,PENDIENTE
+2,3,Laptop 100,Andres,instructor,2025-11-23,2025-12-02,7,6,cumple,PENDIENTE

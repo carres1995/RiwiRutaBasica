@@ -1,1 +1,0 @@
-"""Gestionar equipos (registro, actualización y consulta)."""

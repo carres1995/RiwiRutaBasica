@@ -1,7 +1,7 @@
 from datetime import datetime
 from pathlib import Path
-from archivo_csv import leer_archivo, guardar_csv
-from utils import id, tabla_general
+from src.database.archivo_csv import leer_archivo, guardar_csv
+from src.utils import id, tabla_general, buscar_por_id
 
 RUTA_EQUIPOS = Path("data/equipos.csv")
 CABECERAS = ["equipo_id", "nombre_equipo", "categoria",
@@ -33,10 +33,11 @@ def registrar_equipo(nombre, categoria, descripcion="", eq=None):
         "descripcion": descripcion
     }
     eq.append(nuevo)
+    guardar_equipos(eq)
     return nuevo
 
 
-# ----------  presentación  ----------
+
 def listar_equipos(eq=None):
     """Muestra la tabla sin tocar el disco."""
     if eq is None:
@@ -51,7 +52,7 @@ def listar_equipos(eq=None):
 
     datos = []
     for e in eq:
-        # ---------  campos obligatorios  ---------
+        
         try:
             fila = {
                 "id": str(e["equipo_id"]),
@@ -62,24 +63,27 @@ def listar_equipos(eq=None):
                 "descripción": e.get("descripcion", "")
             }
         except KeyError as err:
-            # si falta algo crítico, avisamos y saltamos ese registro
-            print(f"⚠️  Equipo incompleto (falta {err}) – se omite de la tabla.")
+            print(f"Equipo incompleto (falta {err})  se omite de la tabla.")
             continue
         datos.append(fila)
 
     print("--" * 20, "Lista de Equipos", "--" * 20)
     tabla_general(datos, encabezados, anchos)
     
-def buscar_por_id(id, eq=None):
-    """Busca un equipo por ID y devuelve el dict o None."""
+"""def buscar_por_id(id, eq=None):
+    
     eq = eq or cargar_equipos()
 
     for e in eq:
         if str(e["equipo_id"]) == str(id):
             return e
-    return 
+    return """
 
-def mostrar_equipo(e):
+def mostrar_equipo(cod,equipos):
+    e=buscar_por_id(cod,RUTA_EQUIPOS, equipos)
+    if not e:
+        print("No se encontró un equipo con ese ID.")
+        return
     """Muestra un solo equipo en formato tabla sencillo."""
     print("--" * 20, "Equipo encontrado", "--" * 20)
     print(f"ID         : {e['equipo_id']}")
@@ -91,12 +95,14 @@ def mostrar_equipo(e):
     print("-" * 60)
 
 
-# Uso rápido (ejemplo)
-if __name__ == "__main__":
-    eq = cargar_equipos()
-    cod = input("ID a buscar: ").strip()
-    equipo = buscar_por_id(cod, eq)
-    if equipo:
-        mostrar_equipo(equipo)
-    else:
-        print("No se encontró un equipo con ese ID.")
+def eliminar_equipo(cod, equipos):
+    equipo=buscar_por_id(cod,RUTA_EQUIPOS, equipos)
+    
+    if not equipo:
+        print("Equipo no existente")
+        return False
+    equipos.remove(equipo)   
+    
+    guardar_equipos(equipos) 
+    print("Eliminado con exito")
+    return equipo

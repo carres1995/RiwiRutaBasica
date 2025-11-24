@@ -1,7 +1,8 @@
-from archivo_csv import crear_archivo, leer_archivo
+from src.database.archivo_csv import crear_archivo, leer_archivo
+from pathlib import Path
 
 
-RUTA_USUARIO="/data/usuarios.csv"
+RUTA_USUARIO=Path("data/usuarios.csv")
 CABECERAS=["usuario", "contraseña", "rol"]
 
 crear_archivo(RUTA_USUARIO,CABECERAS,datos=[{"usuario":"ADMIN", "contraseña":"1234", "rol":"ADMIN"}])
